@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -9,32 +8,32 @@ public class Password extends JFrame {
 
 
     public Password(){
-        setTitle("Password Generator");             //Set title of Frame
-        setSize(600, 150);              //Set Size. Wanted everything in a long layout from left to right
-        setDefaultCloseOperation(EXIT_ON_CLOSE);    //Close GUI when X is clicked
+        setTitle("Password Generator");                             //Set title of Frame
+        setSize(600, 150);                              //Set Size. Wanted everything in a long layout from left to right
+        setDefaultCloseOperation(EXIT_ON_CLOSE);                    //Close GUI when X is clicked
 
-        JPanel passwordPanel = new JPanel();        //Created a new Panel
-        passwordPanel.setLayout(null);              //Set Layout to null. Wanted to be able to customize it myself
+        JPanel passwordPanel = new JPanel();                        //Created a new Panel
+        passwordPanel.setLayout(null);                              //Set Layout to null. Wanted to be able to customize it myself
 
-        Insets insets = getInsets();                //Created Insets to help with object placement
-        Dimension size;                             //Created size object to edit button and box size. Not initiated yet
+        Insets insets = getInsets();                                //Created Insets to help with object placement
+        Dimension size;                                             //Created size object to edit button and box size. Not initiated yet
 
-        JButton closeButton = new JButton("Close"); //First Button is close button
-        size = closeButton.getPreferredSize();          //Initialized size to .getPrefferedSize();
-        closeButton.setBounds(500 + insets.left, 25 + insets.top, size.width + 10, size.height); //placement of button
-        passwordPanel.add(closeButton);                 //Added to Panel
+        JButton closeButton = new JButton("Close");             //First Button is close button
+        size = closeButton.getPreferredSize();                      //Initialized size to .getPrefferedSize();
+        closeButton.setBounds(500 + insets.left, 25 + insets.top, size.width + 10, size.height); //placement of button on the panel
+        passwordPanel.add(closeButton);                             //Added element to Panel
 
-        JButton generateButton = new JButton("Generate");   //Created new Generate password button
-        size = generateButton.getPreferredSize();               //re-Initialized the size object to the generate button
-        generateButton.setBounds(400 + insets.left, 25 + insets.top, size.width + 5, size.height); //placement of button
-        passwordPanel.add(generateButton);              //Added to Panel
+        JButton generateButton = new JButton("Generate");
+        size = generateButton.getPreferredSize();
+        generateButton.setBounds(400 + insets.left, 25 + insets.top, size.width + 5, size.height);
+        passwordPanel.add(generateButton);
 
-        JTextField passwordBox = new JTextField();      //Created new TextField that the passwords will be generated and placed into
-        size = passwordBox.getPreferredSize();          //re-Initialized the size object to the passwordBox textField
-        passwordBox.setBounds(5 + insets.left, 25 + insets.top, size.width + 280, size.height + 8); //placement of text field
-        passwordPanel.add(passwordBox);                 //Added to Panel
+        JTextField passwordBox = new JTextField();
+        size = passwordBox.getPreferredSize();
+        passwordBox.setBounds(5 + insets.left, 25 + insets.top, size.width + 280, size.height + 8);
+        passwordPanel.add(passwordBox);
 
-
+                                                                    //Creation of Labels to instruct users to enter quantity of letters/numbers/symbols
         JLabel numberQuantity = new JLabel();
         JLabel letterQuantity = new JLabel();
         JLabel symbolQuantity = new JLabel();
@@ -55,7 +54,6 @@ public class Password extends JFrame {
         symbolQuantity.setBounds(405 + insets.left, 70 + insets.top, size.width + 10, size.height + 8);
         passwordPanel.add(symbolQuantity);
 
-
         JTextField letterNumberBox = new JTextField();
         letterNumberBox.setText("1");
         size = letterNumberBox.getPreferredSize();
@@ -75,17 +73,19 @@ public class Password extends JFrame {
         passwordPanel.add(symbolNumberBox);
 
 
-        //Action listener for close button
+                                                                            //Action listener for close button
         closeButton.addActionListener(e -> {
-            System.exit(0);                     //Close the window
+            System.exit(0);                                           //Close the window
         });
 
+                                                                            //Action listener for Generate button.
+                                                                            //Convert values from boxes into ints
+                                                                            //Run the function below
         generateButton.addActionListener(e ->{
             int letterNum = Integer.parseInt(letterNumberBox.getText());
             int numberNum = Integer.parseInt(numberNumberBox.getText());
             int symbolNum = Integer.parseInt(symbolNumberBox.getText());
 
-            passwordBox.setText("");
             passwordBox.setText(createPassword(letterNum, numberNum, symbolNum));
         });
 
@@ -96,7 +96,7 @@ public class Password extends JFrame {
     }
 
 
-
+                                                    //Function to create password based on values selected by user
     public String createPassword(int letterNum, int numberNum, int symbolNum){
         char[] letter = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
                 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
@@ -105,11 +105,11 @@ public class Password extends JFrame {
         char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
         char[] symbols = {'!', '#', '$', '%', '&', '(', ')', '*', '+'};
 
-        ArrayList<Character> totalPassword = new ArrayList<>();
-        String finalPassword = "";
-        Random rand = new Random();
+        ArrayList<Character> totalPassword = new ArrayList<>();     //ArrayList to hold values. Allows flexibility
+        StringBuilder finalPassword = new StringBuilder();          //return String value
+        Random rand = new Random();                                 //Random Object
 
-        for(int i = 0; i < letterNum; i++){
+        for(int i = 0; i < letterNum; i++){                         //Add to the Arraylist
             totalPassword.add(letter[rand.nextInt(letter.length)]);
         }
 
@@ -121,13 +121,13 @@ public class Password extends JFrame {
             totalPassword.add(symbols[rand.nextInt(symbols.length)]);
         }
 
-        Collections.shuffle(totalPassword);
+        Collections.shuffle(totalPassword);                     //Shuffle order of the Arraylist
 
-        for(int i = 0; i < totalPassword.size(); i++){
-            finalPassword += totalPassword.get(i);
+        for (Character character : totalPassword) {             //Add values to String
+            finalPassword.append(character);
         }
 
-        return finalPassword;
+        return finalPassword.toString();                        //Return String
     }
 
 
