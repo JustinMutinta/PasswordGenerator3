@@ -80,7 +80,14 @@ public class Password extends JFrame {
             System.exit(0);                     //Close the window
         });
 
+        generateButton.addActionListener(e ->{
+            int letterNum = Integer.parseInt(letterNumberBox.getText());
+            int numberNum = Integer.parseInt(numberNumberBox.getText());
+            int symbolNum = Integer.parseInt(symbolNumberBox.getText());
 
+            passwordBox.setText("");
+            passwordBox.setText(createPassword(letterNum, numberNum, symbolNum));
+        });
 
 
 
@@ -103,15 +110,15 @@ public class Password extends JFrame {
         Random rand = new Random();
 
         for(int i = 0; i < letterNum; i++){
-            totalPassword.add(letter[rand.nextInt(letter.length) + 1]);
+            totalPassword.add(letter[rand.nextInt(letter.length)]);
         }
 
         for(int i = 0; i < numberNum; i++){
-            totalPassword.add(numbers[rand.nextInt(numbers.length) + 1]);
+            totalPassword.add(numbers[rand.nextInt(numbers.length)]);
         }
 
         for(int i = 0; i < symbolNum; i++){
-            totalPassword.add(symbols[rand.nextInt(symbols.length) + 1]);
+            totalPassword.add(symbols[rand.nextInt(symbols.length)]);
         }
 
         Collections.shuffle(totalPassword);
