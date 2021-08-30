@@ -1,6 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class Password extends JFrame {
 
@@ -84,4 +87,42 @@ public class Password extends JFrame {
         add(passwordPanel);                         //Adds panel to frame
         setVisible(true);                           //Set to visible
     }
+
+
+
+    public String createPassword(int letterNum, int numberNum, int symbolNum){
+        char[] letter = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+        char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        char[] symbols = {'!', '#', '$', '%', '&', '(', ')', '*', '+'};
+
+        ArrayList<Character> totalPassword = new ArrayList<>();
+        String finalPassword = "";
+        Random rand = new Random();
+
+        for(int i = 0; i < letterNum; i++){
+            totalPassword.add(letter[rand.nextInt(letter.length) + 1]);
+        }
+
+        for(int i = 0; i < numberNum; i++){
+            totalPassword.add(numbers[rand.nextInt(numbers.length) + 1]);
+        }
+
+        for(int i = 0; i < symbolNum; i++){
+            totalPassword.add(symbols[rand.nextInt(symbols.length) + 1]);
+        }
+
+        Collections.shuffle(totalPassword);
+
+        for(int i = 0; i < totalPassword.size(); i++){
+            finalPassword += totalPassword.get(i);
+        }
+
+        return finalPassword;
+    }
+
+
+
 }
